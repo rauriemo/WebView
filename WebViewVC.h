@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  WebViewVC.h
 //  WebView
 //
 //  Created by Rafael Auriemo on 1/12/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface WebViewVC : UIViewController
 
 @end
-
