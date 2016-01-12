@@ -20,10 +20,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.google.com"]]];
+    [self loadURL:@"https://www.google.com"];
     
     self.webView.delegate = self;
     // Do any additional setup after loading the view.
+}
+
+
+-(void) loadURL:(NSString *)urlString {
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
 }
 
 -(void) webViewDidStartLoad:(UIWebView *)webView{
@@ -35,13 +40,25 @@
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:textField.text]]];
+    [self loadURL:textField.text];
     return YES;
 }
 
 -(void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Load Failed" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    UIAlertAction *goHome = [UIAlertAction actionWithTitle:@"Go Home" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self loadURL:@"http://www.mobilemakers.co"];
+    }];
+    
+    [alertController addAction:cancel];
+    [alertController addAction:goHome];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
